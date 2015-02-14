@@ -108,6 +108,12 @@ $lgrey: gainsboro;
 /*border-raid*/
         border-top-right-radius:0;
         border-top-left-radius:0;
+
+        &.hidden{
+            display:none;
+        }
+
+        height:100%;
     }
     
 
@@ -126,11 +132,15 @@ $lgrey: gainsboro;
         background-color:white !important;
     }
     #MegaMenu {
+        position:absolute;
         font-family: myriad-pro, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        width:calc(100% - 40px);
-        margin-left:20px;        
+        width:100%;
         padding: 0;
-        /*top:50px !important;*/
+        top:40px !important;
+        height: calc(100% - 40px);
+        opacity: .9;
+        background-color:white;
+        z-index:2;
     }
 
     .mega-menu-header-bar{
@@ -161,7 +171,12 @@ $lgrey: gainsboro;
       flex-wrap: wrap;
       overflow-x: scroll; 
 
+      &.right-full-width{
+          width:100%;
+      }
+
     }
+
 
     #NearbyPages {
     background-color: transparent;

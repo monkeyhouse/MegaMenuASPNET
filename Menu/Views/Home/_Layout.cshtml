@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>LOGO - @ViewBag.Title</title>
+    <title>PRASI - @ViewBag.Title</title>
 
     <base href="/" />
     @*<link href="~/app/libs/Semantic/semantic.css" rel="stylesheet" />
@@ -17,36 +17,17 @@
 </head>
 <body>
 
-    <div class="ui wide sidebar">
-        <div class=" search-container">
-            <div class="ui icon input">
-                <input type="text" id="SidebarSearch" placeholder="Filter nearby pages...">
-                <i class="search icon"></i>
-            </div>
-
-            <div class="right-triangle"></div>
-
-        </div>
-        <div class="ui fluid vertical menu" id="NearbyItems">
-            <div class="item">Mi, id sollicitudin urna fermentum.</div>
-        </div>
-    </div>
-    <div class="pusher">
 
         <header id="PageHeader" class="hd-header">
             <div class="hd-main-nav hd-item">
-                <div id="MegaMenuTrigger" class="ui button basic hd-item" alt="Primary Navigation MegaMenu">LOGOS Menu </div>
-                <div class="ui fluid popup" id="MegaMenu">
-                    <div class="mega-menu-header-bar"></div>
+                <div id="MegaMenuTrigger" class="ui button basic hd-item" alt="Primary Navigation MegaMenu">PRASI Menu </div>
+                <div class="ui fluid" id="MegaMenu" style="display: none;">
+                    <div class="mega-menu-header-bar">PRASI quick menu</div>
                     <div class="ui vertical menu small pointing" id="mmLeft"> </div>
                     <div class="ui menu vertical small pointing" id="mmMiddle"> </div>
                     <div class="ui menu vertical small" id="mmRight"> </div>
                 </div>
-                @{
-                    var hasNearbyItems = ViewBag.NearbyPages != null && (ViewBag.NearbyPages as IEnumerable<MenuNode>).Any();
-                    var height = hasNearbyItems ? "auto" : "0";
-                }
-                <button id="NearbyPages" style="height:@height;">
+                <button id="NearbyPages" style="display: none;">
                     Nearby Pages
                 </button>
             </div>
@@ -89,7 +70,7 @@
                         <a class="item"> Help for this page </a>
                         <a class="item"> FAQ </a>
                         <a class="item" href="mailto:me@gmail.com">
-                            Contact ELLE Support
+                            Contact PRASI Support
                         </a>
                     </div>
                 </div>
@@ -102,9 +83,9 @@
                 <div class="ui popup basic">
                     <div class="ui vertical menu">
                         <label class="item header"> Organization Links <i class="list icon"></i> </label>
-                        <a class="item"> <i class="home icon"></i> ELLE Home </a>
-                        <a class="item"> <i class="book icon"></i> ELLE Reference </a>
-                        <a class="item"> <i class="book icon"></i> ELLE Test </a>
+                        <a class="item"> <i class="home icon"></i> PRASI Home </a>
+                        <a class="item"> <i class="book icon"></i> PRASI Reference </a>
+                        <a class="item"> <i class="book icon"></i> PRASI Test </a>
                     </div>
                 </div>
 
@@ -123,7 +104,7 @@
             <p class="ft-timestamp" id="FooterTimestamp"> @DateTime.Today.ToString("MM/dd/yy") </p>
         </footer>
 
-    </div>
+
 
 
     <!-- #region Menu Items Context -->

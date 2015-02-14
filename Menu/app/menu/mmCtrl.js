@@ -17,26 +17,11 @@ function createLinkElement(el) {
     return link;
 }
 
-
-function injectSections(data) {
-    /* objectives: inject header and footer into page.
-     * is not called after cache is built
-    > Parse header, footer data from html
-    > Render header, footer onto screen 
-    > Store footer in cache   */
-
-    var menuTemplates = $("<div>").html(data);
-    $('#PageHeader').html(menuTemplates.find('#PageHeader').html());
-    $('#PageFooter').html(menuTemplates.find('#PageFooter').html());
-
-    menuCache.setFooterHTML(menuTemplates.find('#PageFooter').get(0).innerHTML);
-}
-
 function buildMenu(data) {
     /*  Objectives:
         > Parse mega menu data from input json
-        > Render mega menu data into header
-        > Store header in cache
+        > Render mega menu data inplace
+        > Store menu items in cache
         > Store mega menu data in cache
         */
 
@@ -133,36 +118,50 @@ function buildMenu(data) {
 
         //Initializatin of semantic ui content
         //TODO: do the components in parallel?
-        $('#MegaMenuTrigger')
-            .popup({
-                on : 'click',
-                hoverable: true,
-                position: 'bottom left',
-                delay: {
-                    show: 200,
-                    hide: 200
-                },
-                //onHidden: expandLeftColumn,
-                transition: 'fade right',
-                preserve: true,
-                setFluidWidth: false
-            });
+        $('#MegaMenuTrigger').click(function () {
+            //slide in or out
+            $mmLeft.add($mmMiddle).removeClass('hidden');
+            $mmRight.removeClass('right-full-width');
+
+            $("#MegaMenu").fadeToggle('fast');
+            $('#NearbyPages').fadeToggle('fast');
+        });
+
+        $('#NearbyPages').click(function () {           
+            // if visible then show
+            $mmLeft.add($mmMiddle).toggleClass('hidden');
+            $mmRight.toggleClass('right-full-width');
+
+        });
+            //.popup({
+            //    on : 'click',
+            //    //hoverable: true,
+            //    //position: 'bottom left',
+            //    delay: {
+            //        show: 200,
+            //        hide: 200
+            //    },
+            //    //onHidden: expandLeftColumn,
+            //    //transition: 'fade right',
+            //    preserve: true,
+            //    setFluidWidth: false
+            //});
 
         // if hover for more than .2 s, open menu
-        var timeout;       
-        $('#MegaMenuTrigger').hover(
-            function () {
-                timeout = setTimeout(function () {
-                    if ($('#MegaMenuTrigger').popup('is hidden')) {
-                        $('#MegaMenuTrigger').click();
-                    }
-                }, 200);
-            },
-            function () {
-                clearTimeout(timeout);
-                // do stuff when hover off
-            }
-        );
+        //var timeout;       
+        //$('#MegaMenuTrigger').hover(
+        //    function () {
+        //        timeout = setTimeout(function () {
+        //            if ($('#MegaMenuTrigger').popup('is hidden')) {
+        //                $('#MegaMenuTrigger').click();
+        //            }
+        //        }, 200);
+        //    },
+        //    function () {
+        //        clearTimeout(timeout);
+        //        // do stuff when hover off
+        //    }
+        //);
 
         // show/hide middle items based on left menu selection
         $mmLeft.menuAim({
@@ -293,38 +292,39 @@ function bindMenuBar() {
         });
 
         function resizeMenu() {
-            var height = $(window).height() - 140; 
 
-            $(mmLeft).add($(mmMiddle)).add($(mmRight))
-                .height(height);
+            //$(mmLeft).add($(mmMiddle)).add($(mmRight))
+            //    .height(height);
 
-            $('#MegaMenu').height(height + 30); //account for mega menu header
+            var width = $(window).width();
+            var height = $(window).height() - 40;
+
+            $('#MegaMenu').width(width).height(height); //account for mega menu header
+
         }
 
         resizeMenu();
 
-    $('#NearbyPages').click(function() {
-        $('.ui.sidebar').sidebar('toggle');
+       
+        //$('.ui.sidebar').sidebar('toggle');
+        //$("#SidebarSearch").typeWatch({
+        //    callback: filterItems,
+        //    higlight: true
+        //});
 
-
-        $("#SidebarSearch").typeWatch({
-            callback: filterItems,
-            higlight: true
-        });
-
-        function filterItems(value) {
-            var filter = value.toUpperCase();
-            var isEmpty = filter === "";
-            $('#NearbyItems .item').each(function(ix, el) {
-                var text = el.textContent.toUpperCase();
-                if (isEmpty | text.indexOf(filter) > -1) {
-                    el.classList.remove("hidden");
-                } else {
-                    el.classList.add("hidden");
-                }
-            });
-        };
-    });
+        //function filterItems(value) {
+        //    var filter = value.toUpperCase();
+        //    var isEmpty = filter === "";
+        //    $('#NearbyItems .item').each(function(ix, el) {
+        //        var text = el.textContent.toUpperCase();
+        //        if (isEmpty | text.indexOf(filter) > -1) {
+        //            el.classList.remove("hidden");
+        //        } else {
+        //            el.classList.add("hidden");
+        //        }
+        //    });
+        //};
+  
 
         //    .dropdown({
         //    onChange: function (value, text, $selectedItem) {
@@ -332,11 +332,11 @@ function bindMenuBar() {
         //    }
         //});
 
-    $('.ui.sidebar')
-         .sidebar({
-             dimPage: false
-         })
-        .sidebar('setting', 'transition', 'overlay');
+    //$('.ui.sidebar')
+    //     .sidebar({
+    //         dimPage: false
+    //     })
+    //    .sidebar('setting', 'transition', 'overlay');
 
 
 
