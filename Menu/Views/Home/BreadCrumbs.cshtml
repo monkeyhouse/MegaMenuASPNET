@@ -1,0 +1,24 @@
+﻿@model MenuApi.Controllers.SelectedNodes
+@{
+    var navpath = Model;
+
+    if (navpath != null){
+
+        if (navpath.Tier1 != null)
+        {
+            <div class="section">@navpath.Tier1.Text</div>
+        }
+
+        if (navpath.Tier2 != null) { 
+            <i class="right chevron icon divider"></i>
+            <div class="section">@navpath.Tier2.Text</div>
+        }
+
+        if (navpath.Tier3 != null)
+        {
+            <i class="right chevron icon divider"></i>
+            <div class="section">@navpath.Tier3.Text</div>
+        }
+
+    }
+}

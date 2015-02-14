@@ -1,0 +1,58 @@
+﻿@model int
+
+@{
+    ViewBag.Title = "Page " + Model;
+    Layout = "~/Views/Home/_Layout.cshtml";
+}
+
+<p>
+
+    <h2>Page @Model, @HttpContext.Current.Request.Url.PathAndQuery</h2>
+    <h3>Comments:</h3>
+    see futures
+    
+
+
+    <h3>Futures</h3>
+    <ul style="list-style: none; margin-left: 10px;">
+        <li> move icon to left side on menus
+        <li> menu item width
+        <li>
+        <li>Page specific elements?
+        <li> muted style for non-links
+
+        <li> documentation
+        <li> mobiles
+    </ul>
+
+    <div hidden>
+        description: sitemap with navgiation
+        + easy navigation
+        + easy to see where you are in app
+        - has extra menu items that dont link anywhere
+        - a bit of overhead on each page load
+
+        features:
+        + debugging info at bottom
+
+        dev notables:
+        majority of menu is stored in cache after first page load
+        several sections are swapped (or injected on subequent page loads)
+
+        with each page load,
+        send html 'template' with context snippets
+        > subprocess menu items (html) (nearby search)
+        > help link (href)
+        > context breadcrubs (html)
+        > search link (href) (maybe not needed)
+
+
+        optimizations:
+        maybe some actions can be initiated before there is content on screen, eg.
+        can dropdowns before content is there.
+
+        eg. all non-menu dropdowns + the mm popup can be bound;
+    </div>
+
+
+

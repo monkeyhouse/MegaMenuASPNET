@@ -1,0 +1,7 @@
+﻿@model IEnumerable<MenuApi.Controllers.MenuNode>
+
+
+@{foreach (var item in Model)
+{
+    <a href="@item.Url" class="item" id="Side_@item.Id">@item.Text</a>
+}}
