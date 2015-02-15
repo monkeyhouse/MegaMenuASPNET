@@ -328,8 +328,8 @@
     <Content Include="app\themes\default\assets\fonts\icons.otf" />
     <Content Include="app\themes\default\assets\fonts\icons.ttf" />
     <Content Include="app\themes\default\assets\fonts\icons.woff" />
-    <None Include="Views\Home\Breadcrumbs.cshtml" />
-    <None Include="Views\Home\NearbyPages.cshtml" />
+    <Content Include="Views\Home\BreadCrumbs.cshtml" />
+    <Content Include="Views\Home\NearbyPages.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\libs\Jquery\jquery-2.1.3.min.js.map" />
