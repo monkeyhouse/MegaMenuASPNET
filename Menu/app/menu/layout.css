@@ -1,5 +1,8 @@
 ﻿/*colors*/
 /*shared layout features*/
+body {
+  overflow: hidden; }
+
 #PageHeader {
   position: absolute;
   width: 100%;
@@ -31,6 +34,45 @@
 #MobileNav {
   display: none; }
 
+/* Shared Layout (Dektop, Mobile, Etc)*/
+#MegaMenuTrigger {
+  height: 40px;
+  line-height: 40px;
+  color: white;
+  color: white !important;
+  font-family: Impact, Charcoal, sans-serif;
+  font-size: 2em;
+  text-align: center;
+  width: 200px;
+  padding: 0; }
+
+#MegaMenuTrigger.visible, #MegaMenuTrigger:hover {
+  color: black !important;
+  background-color: white !important; }
+
+#HdSecondaryNav .ui.buttons.basic .ui.button {
+  box-shadow: none !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.15); }
+
+.hd-secondary-nav .popup {
+  padding: 0; }
+
+.hd-item .button {
+  height: 40px; }
+
+.hd-item .buttons {
+  vertical-align: top; }
+
+#SecondaryNavTrigger {
+  position: absolute;
+  top: 0;
+  right: 0;
+  box-shadow: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  height: 40px;
+  display: none;
+  visibility: hidden; }
+
 /* Destop Layout*/
 @media (min-width: 769px) {
   .hd-header {
@@ -43,19 +85,6 @@
 
   .hd-item.hd-username {
     flex-shrink: 1; }
-
-  .hd-item .button {
-    height: 40px; }
-
-  .hd-item .buttons {
-    vertical-align: top; }
-
-  #PageHeader .hd-secondary-nav .button {
-    box-shadow: none !important;
-    border-left: 1px solid rgba(255, 255, 255, 0.15); }
-
-  .hd-secondary-nav .popup {
-    padding: 0; }
 
   /*#mmRight .item.a{
         padding-left: 0;
@@ -81,27 +110,12 @@
       visibility: hidden;
       width: 0; }
 
-  #MegaMenuTrigger {
-    height: 40px;
-    line-height: 40px;
-    color: white;
-    color: white !important;
-    font-family: Impact, Charcoal, sans-serif;
-    font-size: 2em;
-    text-align: center;
-    width: 200px;
-    padding: 0; }
-
-  #MegaMenuTrigger.visible, #MegaMenuTrigger:hover {
-    color: black !important;
-    background-color: white !important; }
-
   #MegaMenu {
     position: absolute;
     font-family: myriad-pro, 'Helvetica Neue', Helvetica, Arial, sans-serif;
     width: 100%;
     padding: 0;
-    top: 40px !important;
+    top: 40px;
     height: calc(100% - 40px);
     opacity: 0.9;
     background-color: white;
@@ -152,15 +166,12 @@
     left: 300px;
     padding: 10px; }
 
-  body {
-    overflow: hidden; }
-
-  /* site.css sample content*/ }
+  /* site.css sample content*/
+  .hd-popup-content .popup {
+    max-width: none; }
+ }
 
 @media (max-width: 768px) {
-  #topnav, #sidenav {
-    display: none; }
-
   section#content, #mobileNav, footer {
     display: block;
     float: left;
@@ -174,10 +185,39 @@
     float: left;
     width: 100%; }
 
+  #NearbyPages {
+    display: none; }
+
+  .hd-header .hd-item {
+    display: inline-block; }
+
+  .hd-secondary-nav {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    z-index: 10;
+    background-color: #282828;
+    width: 100%;
+    height: 250px;
+    opacity: 0.9; }
+    .hd-secondary-nav.hidden {
+      visibility: hidden;
+      display: none; }
+    .hd-secondary-nav .buttons {
+      float: right !important; }
+
+  .hd-popup-content {
+    width: 100%; }
+    .hd-popup-content #HdSearchPopup, .hd-popup-content #HdHelpPopup, .hd-popup-content #HdUserPopup, .hd-popup-content #HdLinksPopup {
+      left: 0 !important;
+      top: 0 !important;
+      right: 100px !important;
+      max-width: none;
+      margin-top: 0; }
+
   #mobileNav {
     margin-top: 40px;
-    background-color: 2A2929;
-    color: white; }
+    background-color: 2A2929; }
 
   #mobileNav label {
     font-family: Tahoma;
@@ -189,6 +229,8 @@
 
   #mobileNav .inline.field {
     margin-bottom: 5px; }
- }
 
-/*# sourceMappingURL=layout.css.map */
+  #SecondaryNavTrigger {
+    display: block;
+    visibility: visible; }
+ }

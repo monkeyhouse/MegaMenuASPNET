@@ -261,32 +261,122 @@ function injectContentFromCache() {
 
 function bindMenuBar() {
 
-        //Bind secondary menu popovers
-        $('.hd-secondary-nav .ui.button').popup({
-            hoverable: true,
-            position: 'bottom right',
-            delay: {
-                show: 100,
-                hide: 500
-            }
-        });
+ 
 
+        var breakpoint = 769;
+        var isDesktop = null;
 
         // bind page resize to menu 
         //objective : force mega menu to show full screen
         $(window).resize(function () {
-            resizeMenu();
+            var height = $(window).height();
+            var width = $(window).width(); 
+
+            resizeMenu(width, height);
+
+            var toggleMobile = width < breakpoint & isDesktop !== false;
+            var toggleDesktop = width > breakpoint & isDesktop !== true;
+            if (toggleMobile) {
+                tweakForMobile();
+                isDesktop = false;
+            } else if (toggleDesktop) {
+                tweakForDesktop();
+                isDesktop = true;
+            }
         });
 
-        function resizeMenu() {
+        function resizeMenu(wWidth, wHeight) {
 
-            var width = $(window).width();
-            var height = $(window).height() - 70; //account for page header,  mega menu header
+            var width = wWidth || ($(window).width());
+            var height = (wHeight || $(window).height()) - 70; //account for page header,  mega menu header
 
             $('#MegaMenu').width(width).height(height); 
 
         }
 
-        resizeMenu();
-     
+        function tweakForMobile() {
+            $('.hd-secondary-nav .buttons').addClass('vertical');
+            initMobileSecondaryMenu();
+        }
+
+        function tweakForDesktop() {
+            $('.hd-secondary-nav .buttons').removeClass('vertical');
+            initDesktopSecondaryMenu();
+        }
+
+        function initDesktopSecondaryMenu() {
+            //Bind secondary menu popovers
+            //popup: '.special.popup'
+            var $popups = $(".ui.popup");
+            $popups.hide();
+
+            var $buttons = $('#HdSecondaryNav .ui.button');
+            $buttons.each(function (ix, el) {
+
+                var targetId = el.getAttribute('data-popup');
+                var $target = $popups.filter('#' + targetId);
+                var selector = '#' + targetId; //'.ui.popup[data-popup-id=' + targetId + ']';
+                var $el = $(el);
+                $el.off('click').removeClass('active');
+                $el.popup({
+                    on: 'hover',
+                    hoverable: true,
+                    transition: 'fade',
+                    position: 'bottom right',
+                    delay: {
+                        show: 100,
+                        hide: 300
+                    },
+                    popup: $target.length ? selector : false
+                });
+
+                $target.children().removeClass('black').removeClass('inverted');
+
+            });
+
+          
+
+        }
+
+
+        function initMobileSecondaryMenu() {
+
+            var sNav = $('#HdSecondaryNav');
+            var $popups = $(".ui.popup");
+            var $buttons = sNav.find('.ui.button');
+           
+            $buttons.each(function (ix, el) {
+                $(el).popup('destroy');
+
+                var targetId = el.getAttribute('data-popup');
+
+                $(el).on('click', function () {
+                    $popups.hide();
+                    $buttons.removeClass('active');
+                    $(this).addClass('active');
+                    var tgt = $('#' + targetId);
+                    tgt.children().addClass('black inverted');
+                    tgt.removeClass('hidden').show();
+
+                });
+                
+            });
+          
+            //click first item
+            $buttons.first().click();
+
+            //TODO: rename trigger to toggle?
+            //attach secondary nav toggle
+            sNav.addClass('hidden');
+            $('#SecondaryNavTrigger').off('click');
+            $('#SecondaryNavTrigger').on('click',function () {
+                debugger;
+                sNav.toggleClass('hidden');
+            });
+
+
+        }
+
+        $(window).resize();
+       //resizeMenu();
 };
