@@ -78,10 +78,12 @@ function buildMenu(data) {
         var shouldLoadIntoCache = !menuData || menuData.date !== (new Date()).toISOString().substring(0, 10);
         // if no menu data in cache, then get data
 
-        if (shouldLoadIntoCache) {  
+        if (shouldLoadIntoCache) {
+
+            var getMenuUrl = location.protocol + '//' + location.host + '/Menu/MenuData';
 
             $.ajax({
-                url: 'http://localhost:61702/Menu/MenuData/',
+                url: getMenuUrl,
                 crossDomain: true,
                 cache: false,
                 dataType: 'json'
