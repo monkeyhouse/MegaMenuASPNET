@@ -151,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\images\favicon64.png" />
+    <Content Include="app\libs\Jquery\Plugins\jquery.mousewheel.js" />
     <Content Include="app\libs\Jquery\Plugins\jquery.typeWatch.js" />
     <Content Include="app\menu\layout.css">
       <DependentUpon>layout.scss</DependentUpon>
@@ -169,8 +170,6 @@
     <Content Include="app\libs\Jquery\jquery-2.1.3.js" />
     <Content Include="app\libs\Jquery\jquery-2.1.3.min.js" />
     <Content Include="app\libs\Jquery\Plugins\menuAim.js" />
-    <Content Include="app\libs\Jquery\Plugins\uniqueId.js" />
-    <Content Include="app\libs\Jquery\Plugins\zenCoding.js" />
     <Content Include="app\libs\lorem-ipsum.js\dictionary.js" />
     <Content Include="app\libs\lorem-ipsum.js\generator.js" />
     <Content Include="app\libs\lorem-ipsum.js\README.txt" />

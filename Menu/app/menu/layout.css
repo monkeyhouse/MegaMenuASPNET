@@ -73,12 +73,13 @@
     float: left;
     margin: 0;
     padding: 0;
-    /*border-raid*/
     border-top-right-radius: 0;
     border-top-left-radius: 0;
     height: 100%; }
     .hidden#mmLeft, .hidden#mmMiddle, .hidden#mmRight {
-      display: none; }
+      /*display:none;*/
+      visibility: hidden;
+      width: 0; }
 
   #MegaMenuTrigger {
     height: 40px;
@@ -134,9 +135,13 @@
     height: 20px;
     line-height: 20px;
     color: #ddd;
-    cursor: pointer; }
+    cursor: pointer;
+    width: 120px; }
     #NearbyPages:hover {
       color: gold; }
+    #NearbyPages.hidden {
+      height: 0;
+      font-size: 0; }
 
   section#content {
     background-color: white;

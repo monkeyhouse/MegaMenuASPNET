@@ -10,6 +10,7 @@ namespace MenuApi
                 .Include("~/app/libs/Jquery/jquery-2.1.3.js",
                          "~/app/libs/Semantic/semantic.js",
                          "~/app/libs/Jquery/Plugins/menuAim.js",
+                         "~/app/libs/Jquery/Plugins/jquery.mousewheel.js",                         
                          "~/app/libs/Jquery/Plugins/jquery.typeWatch.js",
                          "~/app/menu/mmCache.js",
                          "~/app/menu/mmCtrl.js"));

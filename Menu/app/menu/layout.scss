@@ -105,12 +105,13 @@ $lgrey: gainsboro;
         float:left;
         margin:0;
         padding: 0;
-/*border-raid*/
         border-top-right-radius:0;
         border-top-left-radius:0;
 
         &.hidden{
-            display:none;
+            /*display:none;*/
+            visibility:hidden;
+            width:0;
         }
 
         height:100%;
@@ -185,9 +186,15 @@ $lgrey: gainsboro;
     line-height: 20px;
     color: #ddd;
     cursor: pointer;
+    width:120px;
 
     &:hover {
-    color: gold;
+        color: gold;
+    }
+
+    &.hidden{
+        height: 0;  
+        font-size:0;
     }
 }
 

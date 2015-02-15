@@ -124,7 +124,7 @@ function buildMenu(data) {
             $mmRight.removeClass('right-full-width');
 
             $("#MegaMenu").fadeToggle('fast');
-            $('#NearbyPages').fadeToggle('fast');
+            $('#NearbyPages').toggleClass('hidden');
         });
 
         $('#NearbyPages').click(function () {           
@@ -133,35 +133,6 @@ function buildMenu(data) {
             $mmRight.toggleClass('right-full-width');
 
         });
-            //.popup({
-            //    on : 'click',
-            //    //hoverable: true,
-            //    //position: 'bottom left',
-            //    delay: {
-            //        show: 200,
-            //        hide: 200
-            //    },
-            //    //onHidden: expandLeftColumn,
-            //    //transition: 'fade right',
-            //    preserve: true,
-            //    setFluidWidth: false
-            //});
-
-        // if hover for more than .2 s, open menu
-        //var timeout;       
-        //$('#MegaMenuTrigger').hover(
-        //    function () {
-        //        timeout = setTimeout(function () {
-        //            if ($('#MegaMenuTrigger').popup('is hidden')) {
-        //                $('#MegaMenuTrigger').click();
-        //            }
-        //        }, 200);
-        //    },
-        //    function () {
-        //        clearTimeout(timeout);
-        //        // do stuff when hover off
-        //    }
-        //);
 
         // show/hide middle items based on left menu selection
         $mmLeft.menuAim({
@@ -217,6 +188,7 @@ function buildMenu(data) {
         }
 
       
+
         function getMarker() {
             return $('<div>').attr('class', 'ui yellow empty circular label small');
         }
@@ -239,6 +211,16 @@ function buildMenu(data) {
 
         init();
 
+        //late actions - low priority
+
+        //bind horizontal scroll on right side menu
+        $mmRight.mousewheel(function (event, delta) {
+            this.scrollLeft -= (delta * 60);
+            //event.preventDefault();
+        });
+
+        //todo: hotkey toggle right menu
+      
 
     }
 })();
@@ -274,8 +256,7 @@ function injectContentFromCache() {
 
 function bindMenuBar() {
 
-    //BindMenubarPopovers() {
-
+        //Bind secondary menu popovers
         $('.hd-secondary-nav .ui.button').popup({
             hoverable: true,
             position: 'bottom right',
@@ -286,58 +267,21 @@ function bindMenuBar() {
         });
 
 
-    // BindMegaMenuResize() {
+        // bind page resize to menu 
+        //objective : force mega menu to show full screen
         $(window).resize(function () {
             resizeMenu();
         });
 
         function resizeMenu() {
 
-            //$(mmLeft).add($(mmMiddle)).add($(mmRight))
-            //    .height(height);
-
             var width = $(window).width();
-            var height = $(window).height() - 40;
+            var height = $(window).height() - 70; //account for page header,  mega menu header
 
-            $('#MegaMenu').width(width).height(height); //account for mega menu header
+            $('#MegaMenu').width(width).height(height); 
 
         }
 
         resizeMenu();
-
-       
-        //$('.ui.sidebar').sidebar('toggle');
-        //$("#SidebarSearch").typeWatch({
-        //    callback: filterItems,
-        //    higlight: true
-        //});
-
-        //function filterItems(value) {
-        //    var filter = value.toUpperCase();
-        //    var isEmpty = filter === "";
-        //    $('#NearbyItems .item').each(function(ix, el) {
-        //        var text = el.textContent.toUpperCase();
-        //        if (isEmpty | text.indexOf(filter) > -1) {
-        //            el.classList.remove("hidden");
-        //        } else {
-        //            el.classList.add("hidden");
-        //        }
-        //    });
-        //};
-  
-
-        //    .dropdown({
-        //    onChange: function (value, text, $selectedItem) {
-        //        // custom action
-        //    }
-        //});
-
-    //$('.ui.sidebar')
-    //     .sidebar({
-    //         dimPage: false
-    //     })
-    //    .sidebar('setting', 'transition', 'overlay');
-
-
-
+     
 };
