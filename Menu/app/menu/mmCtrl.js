@@ -195,17 +195,20 @@ function buildMenu(data) {
         function init() {        //activate left, middle items
             //mark current-page items & activate menus 
             $('#current_page_menu_items input').each(function(ix, el) {
-                
-                var item = document.querySelector('#' + el.value);
-                if (ix === 0) {
-                    showMiddleColumn(item);
-                }
 
-                if (ix === 1) {
-                    showRightColumn(item);
-                }
+                if (el.value) {
+                    var item = document.querySelector('#' + el.value);
+                    if (ix === 0) {
+                        showMiddleColumn(item);
+                    }
 
-                $(item).add($('#Side_' + el.value)).append(getMarker());
+                    if (ix === 1) {
+                        showRightColumn(item);
+                    }
+
+
+                    $(item).add($('#Side_' + el.value)).append(getMarker());
+                }
             });
         }
 
