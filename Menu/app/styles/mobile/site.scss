@@ -1,0 +1,131 @@
+﻿/*colors*/
+$barColor: #282828; // #2F5168;
+$white: white;
+$lborder:rgba(255, 255, 255, 0.15);
+
+$hTop : 40px;
+$hBottom : 30px;
+
+
+body{
+    height:100%;
+}
+
+@mixin toolbar {
+ position: absolute;
+ width: 100%;
+ color: white;
+ background-color: $barColor;
+}
+
+#PageHeader {
+ @include toolbar;
+ top: 0;
+ left: 0;
+ height: $hTop;
+}
+
+#Content {
+    margin-top:$hTop;
+    overflow-y:scroll;
+    position:static;
+    display:inline-block;
+    height:calc(100% - 70px);
+    width: 100%;
+}
+  
+#PageFooter {
+ background-color: $barColor;
+ height: $hBottom;
+ display:inline-flex;
+ position:static;
+ width: 100%;
+}
+
+#MainMenuToggle {
+    color: $white !important;        
+    font-family: Impact, Charcoal, sans-serif;
+    font-size: 2em;
+    text-align:center;
+    width:200px;
+    height:$hTop;
+    line-height:$hTop;
+    color: $white;
+    padding:0;
+    box-shadow:none !important;
+    border:1px solid $lborder;
+ 
+}
+
+#MainMenuToggle.active{
+    color:$barColor !important;
+    background-color:white !important;
+}
+
+#MainMenu{
+    position:absolute;
+    z-index:2;
+    top: $hTop; 
+    width:100%;
+    height: calc(100% - 40px);
+    opacity:.9;
+    background-color:$barColor;
+
+    &.hidden{
+        display: none;
+        visibility: hidden;
+    }
+}
+
+.ui.search.dropdown .menu.visible{
+    height: 300px;
+    max-height: none;
+}
+
+#SecondNav .ui.buttons.basic .ui.button{
+  box-shadow:none !important;
+  border-left: 1px solid $lborder;
+}
+
+
+#SecondNavToggle{
+    position:absolute;
+    top:0;
+    right:0;
+    box-shadow:none !important;
+    border:1px solid $lborder;
+    height:$hTop;
+}
+
+
+    
+#SecondNav{
+    position: absolute;
+    top:$hTop;
+    right: 0;
+    z-index: 10;
+    background-color: $barColor;
+    width:100%;
+    height:calc(100% - 40px);
+    opacity:.9;
+
+    &.hidden{
+        visibility:hidden;
+        display:none;
+    }
+    
+    .buttons{
+        float:right  !important;
+    }
+    
+  }
+
+#HdSearchPopup, #HdHelpPopup, #HdUserPopup, #HdLinksPopup{
+    position:absolute;
+    left:0;
+    top:0 ;
+    right:100px;
+    max-width:none;
+    margin-top:0;   
+}
+  

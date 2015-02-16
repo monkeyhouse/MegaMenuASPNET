@@ -1,0 +1,162 @@
+﻿@using MenuApi.Controllers
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PRASI - @ViewBag.Title</title>
+
+    <base href="/" />
+    @*<link href="~/app/libs/Semantic/semantic.css" rel="stylesheet" />
+        <link href="~/app/menu/layout.min.css" rel="stylesheet" />
+        <link href="~/app/menu/temp.css" rel="stylesheet">*@
+
+    @Styles.Render("~/app/styles")
+
+    <link rel="shortcut icon" type="image/png" href="~/app/images/favicon64.png" />
+</head>
+<body>
+
+
+<header id="PageHeader" class="hd-header">
+    <div class="hd-main-nav hd-item">
+        <div id="MegaMenuTrigger" class="ui button basic hd-item" alt="Primary Navigation MegaMenu">PRASI Menu </div>
+        <div class="ui fluid" id="MegaMenu" style="display: none;">
+            <div class="mega-menu-header-bar">PRASI quick menu</div>
+            <div class="ui vertical menu small pointing" id="mmLeft"> </div>
+            <div class="ui menu vertical small pointing" id="mmMiddle"> </div>
+            <div class="ui menu vertical small" id="mmRight"> </div>
+        </div>
+        <button id="NearbyPages" class="hidden">
+            Nearby Pages
+        </button>
+    </div>
+    <div class="hd-item hd-username">@ViewBag.Name</div>
+ 
+    <div class="ui button icon  inverted basic yellow" id="SecondaryNavTrigger">
+        <i class="content icon"></i>
+    </div>
+    <div class="hd-secondary-nav hd-item" id="HdSecondaryNav">
+        <div class="ui icon inverted large basic yellow buttons">
+            <div class="ui button icon" data-popup="HdUserPopup">
+                <i class="user icon"></i>User
+            </div>
+            <div class="ui button" data-popup="HdSearchPopup">
+                <i class="search icon"></i>Search
+            </div>
+
+            <div class="ui button" id="HelpLink" data-popup="HdHelpPopup">
+                <i class="help icon"></i>Help
+            </div>
+
+            <div class="ui button" data-popup="HdLinksPopup">
+                <i class="list icon"></i>Links
+            </div>
+        </div>
+
+        <div class="hd-popup-content">
+            <div class="ui popup basic" id="HdUserPopup">
+                <div class="ui vertical menu fluid">
+                    <label class="item header"> User Actions <i class="user icon"></i> </label>
+                    <a class="item"> <i class="home icon"></i> Go Home </a>
+                    <a class="item">
+                        <i class="protect icon"></i>
+                        Change Password
+                        <p> there is a bit of text here </p>
+                    </a>
+                    <a class="item"> <i class="refresh icon"></i> Reload Profile & Menu </a>
+                    <a class="item"> <i class="sign out icon"></i>Sign Out </a>
+                </div>
+            </div>
+
+            <div class="ui popup basic" id="HdSearchPopup">
+                <div class="ui vertical menu fluid ">
+                    <label class="item header"> Search Pages <i class="search icon"></i> </label>
+                    <a class="item"> Waluigis </a>
+                    <a class="item"> Myocarium </a>
+                    <a class="item"> Confrontation </a>
+                </div>
+            </div>
+
+            <div class="ui popup basic" id="HdLinksPopup">
+                <div class="ui vertical menu fluid">
+                    <label class="item header"> Organization Links <i class="list icon"></i> </label>
+                    <a class="item"> <i class="home icon"></i> PRASI Home </a>
+                    <a class="item"> <i class="book icon"></i> PRASI Reference </a>
+                    <a class="item"> <i class="book icon"></i> PRASI Test </a>
+                </div>
+            </div>
+
+            <div class="ui popup basic" id="HdHelpPopup">
+                <div class="ui vertical menu fluid ">
+                    <label class="item header"> Help Pages <i class="help icon"></i> </label>
+                    <a class="item"> Help for this page </a>
+                    <a class="item"> FAQ </a>
+                    <a class="item" href="mailto:me@gmail.com">
+                        Contact PRASI Support
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+<div id="Content" style="overflow-y: scroll;">
+    <div id="InnerContent" style="height: 100%; width: 100%;">
+        @RenderBody()
+    </div>
+</div>
+
+    <footer id="PageFooter">
+        <p class="ft-breadcrumbs" id="Breadcrumbs"></p>
+        <p class="ft-office"> @ViewBag.Office </p>
+        <p class="ft-timestamp" id="FooterTimestamp"> @DateTime.Today.ToString("MM/dd/yy") </p>
+    </footer>
+
+
+
+
+    <!-- #region Menu Items Context -->
+    <!-- Template for hidden menu and menu context items. This template is rendered on each page load -->
+
+    <div id="template" hidden>
+
+        <div id="current_page_menu_items">
+            <input type="hidden" id="Tier1NodeId" value="@ViewBag.Tier1NodeId" />
+            <input type="hidden" id="Tier2NodeId" value="@ViewBag.Tier2NodeId" />
+            <input type="hidden" id="Tier3NodeId" value="@ViewBag.Tier3NodeId" />
+        </div>
+
+        <div id="breadcrumbs_template">
+            @Html.Partial("BreadCrumbs", ViewBag.NavigationPath as SelectedNodes)
+        </div>
+
+        <div id="nearbyitems_template">
+            @Html.Partial("NearbyPages", ViewBag.NearbyPages as IEnumerable<MenuNode>)
+        </div>
+
+        <div id="helplinkhref_template" data-href="#ReplacedByTemplateLinkData"></div>
+    </div>
+
+<!-- #endregion -->
+
+    @*
+    <!-- Libs -->
+    <script src="~/app/libs/Jquery/jquery-2.1.3.js"></script>
+    <script src="~/app/libs/Semantic/semantic.js"></script>
+    <script src="~/app/libs/Jquery/Plugins/menuAim.js"></script>
+    <script src="~/app/libs/Jquery/Plugins/jquery.typeWatch.js"></script>
+    <script src="~/app/libs/Jquery/Plugins/jquery.mousewheel.js"></script>
+
+
+    <!-- Menubar scripts -->
+    <script src="~/app/menu/mmCache.js"></script>
+    <script src="~/app/menu/mmCtrl.js"></script>
+*@
+
+
+    @Scripts.Render("~/app/scripts")
+</body>
+</html>

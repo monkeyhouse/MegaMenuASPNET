@@ -1,25 +1,19 @@
-﻿/*colors*/
-$dblue: #282828; // #2F5168;
-$blue: 2A2929;//#5696bc;
-$lblue: aliceblue;
-$white: white;
-$offwhite: #eee;
-$lgrey: gainsboro;
-$lborder:rgba(255, 255, 255, 0.15);
-
-$hTop : 40px;
-$hBottom : 40px;
-
-
-/*shared layout features*/
+﻿
 body{
-    overflow:hidden;
+ overflow:hidden;
 }
 
 @mixin toolbar {
  position: absolute;
  width: 100%;
  color: white;
+ background-color: $dblue;
+}
+
+@mixin toolbarItem {
+ height:$hTop;
+ line-height:40px;
+ color: $white;
 }
 
 #PageHeader {
@@ -27,18 +21,17 @@ body{
  top: 0;
  left: 0;
  height: 40px;
- background-color: $dblue;
 }
 
 #PageFooter {
+ height: $hBottom;
  @include toolbar;
  bottom: 0;
  left: 0;
- background-color: $dblue;
- height: 30px;
+ display:flex;
+ justify-content: space-between;           
 }
 
-/* content */               
 #Content {
     position: absolute;
     top: $hTop;
@@ -48,21 +41,7 @@ body{
     right: 0;
 }
 
-
-/* Default Layout  Settings */
-#MobileNav {
-  display: none;
-}
-
-
-@mixin toolbarItem {
- height:$hTop;
- line-height:40px;
- color: $white;
-}
-
-
-/* Shared Layout (Dektop, Mobile, Etc)*/
+/* Header Menu Elements */
 #MegaMenuTrigger {
     @include toolbarItem;    
     color: $white !important;        
@@ -109,9 +88,8 @@ body{
 }
 
 
-/* Destop Layout*/
 
-@media(min-width: 769px) {
+   
 
  .hd-header{
     display:flex;
@@ -178,6 +156,11 @@ body{
     .ui.menu .item.hidden {
         display: none;
     }
+
+
+    .ui.menu .blue.item {
+        color: rgb(59, 131, 192);
+    }
     
 
     #mmLeft{
@@ -205,7 +188,7 @@ body{
     }
 
 
-    #NearbyPages {
+#NearbyPages {
     background-color: transparent;
     border: none;
     height: 20px;
@@ -224,16 +207,6 @@ body{
         }
     }
 
-    section#content {
-     background-color: $white;
-     position: absolute;
-     top: 90px; 
-     right: 0;
-     bottom: 40px;
-     left: 300px;
-     padding: 10px;
-    }
-
 
        
     /* site.css sample content*/
@@ -241,94 +214,55 @@ body{
   .hd-popup-content .popup{
         max-width:none;       
     }
+
+
+/* Footer Styles*/
+
+#PageFooter p, #PageFooter .ui.breadcrumb .section {
+    font-size: 11.5px !important;
+    line-height: 30px;
+    font-family: Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif !important;
 }
 
 
-@media (max-width: 768px) {
-  
-  section#content, #mobileNav, footer {
-    display: block;
+.ft-breadcrumbs a,  .ft-breadcrumbs div, .ft-breadcrumbs .divider {
+    color: whitesmoke;
     float: left;
-    position: static;
-    width: 100%;
-  }
-  
-  #content, #mobileNav {
-    height: auto;
-  }
-  
-  section#content {
-    float: left;
-    width: 100%;
-  }
-  
-  #NearbyPages {
-    display:none;
-  }
+    overflow: hidden;  
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
-  .hd-header .hd-item{
-      display:inline-block;
-  }
-    
-  .hd-secondary-nav{
-    position: absolute;
-    top:$hTop;
-    right: 0;
-    z-index: 10;
-    background-color: $dblue;
-    width:100%;
-    height:250px;
-    opacity:.9;
-
-    &.hidden{
-        visibility:hidden;
-        display:none;
+    .ft-breadcrumbs i {
+    line-height: 30px;
+    height: 30px;
+    margin-left: 3px;
     }
+
+.ft-breadcrumbs {
+    display: flex;             
+      
+    line-height: 30px;
+    margin-bottom: 0;
+    height: 30px;        
+    padding-left: 10px;
+    flex-shrink: 3;
+}
+
+     
+
+.ft-office {
+    margin-left: 10px;
+    line-height: 30px;
+    height: 30px;
+    white-space: nowrap;
+    flex-shrink: 0;
     
-    .buttons{
-        float:right  !important;
-    }
-    
-  }
+}
 
-  .hd-popup-content{
-    width:100%;
-    #HdSearchPopup, #HdHelpPopup, #HdUserPopup, #HdLinksPopup{
-        left:0 !important;
-        top:0 !important;
-        right:100px !important;
-        max-width:none;
-        margin-top:0;
-        // width: calc(100% - 100px) !important;  
-   
-        
-        .menu{
-        }
-    }
-   }
-  
-
-  #mobileNav {
-    margin-top: 40px;
-    background-color: $blue;
-  }
-  
-  #mobileNav label {
-    font-family: Tahoma;
-    font-weight: bold;
-    width: 80px; 
-  }
-  
-  #mobileNav .ui.search.dropdown {
-    width: calc(100% - 90px);
-  }
-  
-  #mobileNav .inline.field {
-    margin-bottom: 5px;
-  }
-
-  #SecondaryNavTrigger{
-    display:block;
-    visibility:visible;
-  }
+.ft-timestamp {
+    margin-left: 10px;
+    margin-right: 10px;
+    flex-shrink: 0;
+ 
 }

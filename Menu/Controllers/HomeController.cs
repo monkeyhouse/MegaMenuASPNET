@@ -2,10 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Helpers;
-using System.Web.Http;
 using System.Web.Mvc;
 using MMLib.RapidPrototyping.Generators;
 using WebGrease.Css.Extensions;
@@ -41,18 +37,32 @@ namespace MenuApi.Controllers
     {
         public JsonResult MenuData()
         {
-            var vm = MenuRepository.MenuData;            
+            var vm = MenuRepository.DesktopData;            
+            return Json(vm, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult MobileMenuData()
+        {
+            var vm = MenuRepository.MobileData;
             return Json(vm, JsonRequestBehavior.AllowGet);
         }
 
     }
 
-    public class FlatMenuBarVm
+    public class DesktopMenuDataVm
     {
         public IEnumerable<MenuNode> Left;
         public IEnumerable<MenuNode> Middle;
         public Dictionary<string, IEnumerable<MenuNode>> Right;
     }
+
+    public class MobileMenuDataVm
+    {
+        public IEnumerable<MenuNode> TierOne;
+        public Dictionary<string, IEnumerable<MenuNode>> TierTwoDictionary;
+        public Dictionary<string, IEnumerable<MenuNode>> TierThreeDictionary;
+    }
+
 
     public class MenuBarVm
     {
@@ -84,24 +94,28 @@ namespace MenuApi.Controllers
             var rootNodes = m.GenerateTree();
 
             var roots = rootNodes as IList<MenuNode> ?? rootNodes.ToList();
-            var tierOnes = roots.Select(t => new MenuNode(t) { Children = null });
-            var tierTwos = roots.SelectMany(t => t.Children).Select(t => new MenuNode(t) { Children = null }).ToList();
-            var tierThreeLookup = roots.SelectMany(t => t.Children.Select(n => new { Id = n.Id, Nodes = n.Children }))
+            var tierOnes = roots.Select(t => new MenuNode(t) {Children = null}).ToList();
+            var tierTwos = roots.SelectMany(t => t.Children).Select(t => new MenuNode(t) {Children = null}).ToList();
+            var tierThreeLookup = roots.SelectMany(t => t.Children.Select(n => new {Id = n.Id, Nodes = n.Children}))
                 .ToDictionary(t => t.Id, t => t.Nodes);
 
 
             //var tierThreeLookup = tierTwos.ToDictionary<MenuNode, string, IEnumerable<MenuNode>>(t => t.Id, t => t.Children.SelectMany(n => n.Children));
-            var vm = new FlatMenuBarVm()
+            DesktopData = new DesktopMenuDataVm()
             {
                 Left = tierOnes,
                 Middle = tierTwos,
                 Right = tierThreeLookup,
             };
 
-            MenuData = vm;
+            MobileData = new MobileMenuDataVm()
+            {
+                TierOne = tierOnes,
+                TierTwoDictionary = roots.ToDictionary(t => t.Id, t => t.Children.Select(c => new MenuNode(c))),
+                TierThreeDictionary = tierThreeLookup
+            };
 
-
-            //Generate User Information 
+        //Generate User Information 
             var person = new PersonGenerator().Next();
             var name = String.Format("{0} {1} ", person.FirstName, person.LastName, person.Mail);
             UserInformationCache = new UserInformation() { Name = "Mr " + name + ", Junior Title", Office = "Wing House Express, C-Suite of Sierra Nevada" };
@@ -110,7 +124,8 @@ namespace MenuApi.Controllers
        // public static MenuNode
 
         public static List<MenuNode> MenuTree { get; set; }
-        public static FlatMenuBarVm MenuData { get; private set; }
+        public static MobileMenuDataVm MobileData { get; private set; }
+        public static DesktopMenuDataVm DesktopData { get; private set; }
 
         public static SelectedNodes GetSelectedNodes(int? t1, int? t2, int? t3)
         {
@@ -119,13 +134,13 @@ namespace MenuApi.Controllers
             MenuNode t3Item = null;
 
             if (t1.HasValue)
-                t1Item = MenuData.Left.Single(t => t.PageId == t1);
+                t1Item = DesktopData.Left.Single(t => t.PageId == t1);
 
             if (t1Item != null && t2.HasValue)
-                t2Item = MenuData.Middle.Single(t => t.PageId == t2);
+                t2Item = DesktopData.Middle.Single(t => t.PageId == t2);
 
             if (t2Item != null && t3.HasValue)
-                t3Item = MenuData.Right[t2Item.Id].Single(t => t.PageId == t3);
+                t3Item = DesktopData.Right[t2Item.Id].Single(t => t.PageId == t3);
 
             return new SelectedNodes
                 {
@@ -138,7 +153,7 @@ namespace MenuApi.Controllers
         public static IEnumerable<MenuNode> GetTierThreeItems(MenuNode t2Item)
         {
             if (t2Item != null && t2Item.Id != null && t2Item.Id != String.Empty)
-                return MenuData.Right[t2Item.Id];
+                return DesktopData.Right[t2Item.Id];
 
             return new List<MenuNode>();
         }
@@ -173,7 +188,7 @@ namespace MenuApi.Controllers
         public MenuNode CreateNode(string parentId = null)
         {
             var id = PageId++;
-            return new MenuNode()
+            var mn = new MenuNode()
             {
                
                 Id = "Node_" + (id).ToString(),
@@ -182,6 +197,9 @@ namespace MenuApi.Controllers
                 Url = String.Empty,
                 PageId = id
             };
+
+            mn.Text = mn.Id + " " + mn.Text;
+            return mn;
         }
 
         public string GenerateUrl(int? tier1Id = null, int? tier2Id = null, int? tier3Id = null)

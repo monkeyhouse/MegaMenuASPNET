@@ -3,18 +3,21 @@
     var api = {};
 
     api.getData = getMenuData;
-    api.setTierThree = setTierThree;
-    api.setmmLeftHTML = setMegaMenuLeftHtml;
-    api.setmmMiddleHTML = setMegaMenuMiddleHtml;
+    api.setTierOne = setTierOne;
+    api.setTierTwoDictionary = setTierTwo;
+    api.setTierThreeDictionary = setTierThree;
+
     api.save = saveCache;
 
-    var cacheKey = 'DesktopMenuData';
+    var cacheKey = 'MobileMenuData';
     var items = {};
 
     //load cache from sessionStorage
     function init() {
         var jsonItems = sessionStorage.getItem(cacheKey);
-        if (jsonItems) {items = JSON.parse(jsonItems);}
+        if (jsonItems) {
+            items = JSON.parse(jsonItems);
+        }
     }
 
     function updateCache(itemName, data) {
@@ -31,12 +34,10 @@
         return items;
     }
 
-    function setMegaMenuLeftHtml(data) { updateCache("mmLeftHTML", data); }
-    function setMegaMenuMiddleHtml(data) { updateCache("mmMiddleHTML", data); }
-    function setTierThree(data) { updateCache("tierThreeLookup", data); }
+    function setTierOne(data) { updateCache("tierOne", data); }
+    function setTierTwo(data) { updateCache("tierTwoDictionary", data); }
+    function setTierThree(data) { updateCache("tierThreeDictionary", data); }
   
-
-
 
     init();
     return api;

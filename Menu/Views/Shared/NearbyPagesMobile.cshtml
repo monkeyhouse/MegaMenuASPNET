@@ -1,0 +1,7 @@
+﻿@model IEnumerable<MenuApi.Controllers.MenuNode>
+
+
+@{foreach (var item in Model)
+{
+    <option data-href="@item.Url#ContextReplacment" value="@item.Id">@item.Text</option>
+}}

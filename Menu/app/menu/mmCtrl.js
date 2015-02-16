@@ -2,12 +2,11 @@
 var mmMiddle = '#mmMiddle';
 var mmRight = '#mmRight';
 
-
 function createLinkElement(el) {
     var link = document.createElement("a");
     link.textContent = el.Text;
     link.id = el.Id;
-    if (el.Url) {
+    if (el.Url){
         link.href = el.Url;
         link.className = "blue item";
     } else {
@@ -17,10 +16,9 @@ function createLinkElement(el) {
     return link;
 }
 
-function buildMenu(data) {
+function buildCache(data) {
     /*  Objectives:
         > Parse mega menu data from input json
-        > Render mega menu data inplace
         > Store menu items in cache
         > Store mega menu data in cache
         */
@@ -54,14 +52,15 @@ function buildMenu(data) {
         }
     }
 
-    //render left, middle mm sections
-    $(mmLeft).html(leftFragment);
-    $(mmMiddle).html(middleFrag);
+    var left = $('<div>').html(leftFragment);
+    var middle = $('<div>').html(middleFrag);
 
     //cache data
-    menuCache.setmmLeftHTML($(mmLeft).get(0).innerHTML);
-    menuCache.setmmMiddleHTML($(mmMiddle).get(0).innerHTML);
+    menuCache.setmmLeftHTML(left.html());
+    menuCache.setmmMiddleHTML(middle.html());
     menuCache.setTierThree(rightHtmlLookup);
+    menuCache.save();
+
 }
 
 (function () {
@@ -71,7 +70,7 @@ function buildMenu(data) {
      */
 
 
-    function renderMenuPromise() {
+    function loadDataPromise() {
         var deferred = $.Deferred();
 
         var menuData = menuCache.getData();
@@ -88,7 +87,7 @@ function buildMenu(data) {
                 cache: false,
                 dataType: 'json'
             }).then(function (responseData) {
-                buildMenu(responseData);
+                buildCache(responseData);
                 deferred.resolve();
 
             });
@@ -96,7 +95,6 @@ function buildMenu(data) {
             bindMenuBar();
 
         } else {
-            injectContentFromCache();
             bindMenuBar();
             deferred.resolve();
         }
@@ -104,9 +102,9 @@ function buildMenu(data) {
         return deferred.promise();
     }
 
-    $.when(renderMenuPromise()).done(function() {
+    $.when(loadDataPromise()).done(function () {
 
-       
+        renderMenu();
         injectContextContent();
         bindActions();
 
@@ -209,7 +207,7 @@ function buildMenu(data) {
                     }
 
 
-                    $(item).add($('#Side_' + el.value)).append(getMarker());
+                    $(item).append(getMarker());
                 }
             });
         }
@@ -252,7 +250,8 @@ function injectContextContent() {
 };
 
 
-function injectContentFromCache() {
+function renderMenu() {
+    //render left, middle mm sections
     var menuData = menuCache.getData();
 
     $(mmLeft).html(menuData.mmLeftHTML);
@@ -262,10 +261,6 @@ function injectContentFromCache() {
 function bindMenuBar() {
 
  
-
-        var breakpoint = 769;
-        var isDesktop = null;
-
         // bind page resize to menu 
         //objective : force mega menu to show full screen
         $(window).resize(function () {
@@ -274,39 +269,6 @@ function bindMenuBar() {
 
             resizeMenu(width, height);
 
-            var toggleMobile = width < breakpoint & isDesktop !== false;
-            var toggleDesktop = width > breakpoint & isDesktop !== true;
-            if (toggleMobile) {
-                tweakForMobile();
-                isDesktop = false;
-            } else if (toggleDesktop) {
-                tweakForDesktop();
-                isDesktop = true;
-            }
-        });
-
-        function resizeMenu(wWidth, wHeight) {
-
-            var width = wWidth || ($(window).width());
-            var height = (wHeight || $(window).height()) - 70; //account for page header,  mega menu header
-
-            $('#MegaMenu').width(width).height(height); 
-
-        }
-
-        function tweakForMobile() {
-            $('.hd-secondary-nav .buttons').addClass('vertical');
-            initMobileSecondaryMenu();
-        }
-
-        function tweakForDesktop() {
-            $('.hd-secondary-nav .buttons').removeClass('vertical');
-            initDesktopSecondaryMenu();
-        }
-
-        function initDesktopSecondaryMenu() {
-            //Bind secondary menu popovers
-            //popup: '.special.popup'
             var $popups = $(".ui.popup");
             $popups.hide();
 
@@ -334,49 +296,18 @@ function bindMenuBar() {
 
             });
 
-          
+        });
+
+        function resizeMenu(wWidth, wHeight) {
+
+            var width = wWidth || ($(window).width());
+            var height = (wHeight || $(window).height()) - 70; //account for page header,  mega menu header
+
+            $('#MegaMenu').width(width).height(height); 
 
         }
 
-
-        function initMobileSecondaryMenu() {
-
-            var sNav = $('#HdSecondaryNav');
-            var $popups = $(".ui.popup");
-            var $buttons = sNav.find('.ui.button');
-           
-            $buttons.each(function (ix, el) {
-                $(el).popup('destroy');
-
-                var targetId = el.getAttribute('data-popup');
-
-                $(el).on('click', function () {
-                    $popups.hide();
-                    $buttons.removeClass('active');
-                    $(this).addClass('active');
-                    var tgt = $('#' + targetId);
-                    tgt.children().addClass('black inverted');
-                    tgt.removeClass('hidden').show();
-
-                });
-                
-            });
           
-            //click first item
-            $buttons.first().click();
-
-            //TODO: rename trigger to toggle?
-            //attach secondary nav toggle
-            sNav.addClass('hidden');
-            $('#SecondaryNavTrigger').off('click');
-            $('#SecondaryNavTrigger').on('click',function () {
-                debugger;
-                sNav.toggleClass('hidden');
-            });
-
-
-        }
-
         $(window).resize();
-       //resizeMenu();
+
 };
