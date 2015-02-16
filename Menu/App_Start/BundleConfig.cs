@@ -6,7 +6,7 @@ namespace MenuApi
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/app/scripts")
+            bundles.Add(new ScriptBundle("~/app/desktopscripts")
                 .Include("~/app/libs/Jquery/jquery-2.1.3.js",
                          "~/app/libs/Semantic/semantic.js",
                          "~/app/libs/Jquery/Plugins/menuAim.js",
@@ -14,7 +14,7 @@ namespace MenuApi
                          "~/app/menu/mmCache.js",
                          "~/app/menu/mmCtrl.js"));
 
-            bundles.Add(new StyleBundle("~/app/styles").Include(
+            bundles.Add(new StyleBundle("~/app/desktopstyles").Include(
                                         "~/app/libs/Semantic/semantic.css",
                                         "~/app/styles/site.css"));
 
@@ -34,7 +34,8 @@ namespace MenuApi
 
 
             #endregion mobile
-            // BundleTable.EnableOptimizations = true;
+
+            BundleTable.EnableOptimizations = true;
             /* //add link to jquery on the CDN
     var jqueryCdnPath = "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.min.js";
 

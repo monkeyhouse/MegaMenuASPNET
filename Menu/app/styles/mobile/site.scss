@@ -68,7 +68,7 @@ body{
     top: $hTop; 
     width:100%;
     height: calc(100% - 40px);
-    opacity:.9;
+    opacity:.95;
     background-color:$barColor;
 
     &.hidden{

@@ -49,7 +49,7 @@ body {
   top: 40px;
   width: 100%;
   height: calc(100% - 40px);
-  opacity: 0.9;
+  opacity: 0.95;
   background-color: #282828; }
   #MainMenu.hidden {
     display: none;
