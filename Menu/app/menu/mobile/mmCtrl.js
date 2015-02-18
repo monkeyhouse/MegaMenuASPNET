@@ -77,6 +77,9 @@ function buildCache(data) {
     var menuToggle = $('#MainMenuToggle'),
         mainMenu = $("#MainMenu");
 
+    //HTML Template
+    var emptyOption = '<option val=""></option>';
+
     /* Objectives:
      * Coordinate Menu Lifecyle
      */
@@ -130,7 +133,7 @@ function buildCache(data) {
             //swap second tier options
             var tierTwoData = menuCache.getData().tierTwoDictionary;
             var items = tierTwoData[this.value];
-            tierTwoSelect.html(items);
+            tierTwoSelect.html(items).prepend(emptyOption);
             tierTwoSelect.val('');
             tierTwoSelect.change();
         });
@@ -139,7 +142,7 @@ function buildCache(data) {
             //swap third tier options
             var tierThreeData = menuCache.getData().tierThreeDictionary;
             var items = tierThreeData[this.value];
-            tierThreeSelect.html(items);
+            tierThreeSelect.html(items).prepend(emptyOption);
             tierThreeSelect.val('');
             tierThreeSelect.change();
             toggleGo();
@@ -192,10 +195,9 @@ function buildCache(data) {
             if (ix === 0) {
                 //render firstTier
                 var menuData = menuCache.getData();
-                tierOneSelect.html(menuData.tierOne);
+                tierOneSelect.html(menuData.tierOne).prepend('<option val=""></option>') ;
                 if (el.value) {
                     tierOneSelect.val(el.value);
-                    //tierOneSelect.dropdown('set value', el.value);
                     tierOneSelect.change();
                 }
             }
@@ -204,17 +206,17 @@ function buildCache(data) {
                 if (ix === 1) {
 
                     tierTwoSelect.val(el.value);
-                    //tierTwoSelect.dropdown('set value', el.value);
                     tierTwoSelect.change();
                 }
 
                 if (ix === 2) {
                     tierThreeSelect.val(el.value);
-                    //tierThreeSelect.dropdown('set value', el.value);
                     tierThreeSelect.change();
                 }
             }
         });
+
+
 
     }
 

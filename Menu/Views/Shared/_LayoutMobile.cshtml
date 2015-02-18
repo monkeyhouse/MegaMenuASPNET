@@ -32,26 +32,19 @@
 
     </div>
 
-    <footer id="PageFooter">
-        <p class="ft-breadcrumbs" id="Breadcrumbs"></p>
-        <p class="ft-office"> @ViewBag.Office </p>
-        <p class="ft-timestamp" id="FooterTimestamp"> @DateTime.Today.ToString("MM/dd/yy") </p>
-    </footer>
-
     <div class="hidden" id="MainMenu">
         <div class="ui divider horizontal">Go Go Menu</div>
 
-        <a class="ui button large disabled" id="GoToPage" href="#">Go</a>
-
+        <select id="TierOneSelect" style="width:95%"></select>
+        <div class="ui divider horizontal"></div>
+        <select id="TierTwoSelect" style="width:95%"></select>
         <div class="ui divider horizontal"></div>
 
-        <select id="TierOneSelect" style="width:300px"></select>
-        <div class="ui divider horizontal"></div>
-        <select id="TierTwoSelect" style="width:300px"></select>
+        <select id="TierThreeSelect" style="width: 95%;"></select>
         <div class="ui divider horizontal"></div>
 
-        <select id="TierThreeSelect" style="width:300px"></select>
-        <div class="ui divider horizontal"></div>
+        <a class="ui button large disabled blue" style="width: 95%;" id="GoToPage" href="#">Go</a>
+
 
     </div>
 
@@ -117,6 +110,14 @@
                 </div>
             </div>
         </div>
+
+        <section id="UserInfoFooter">
+            @ViewBag.Name<br/>
+            @ViewBag.Office
+        </section>
+
+
+
     </div>
 
 
@@ -124,16 +125,12 @@
     <!-- #region Menu Items Context -->
     <!-- Template for hidden menu and menu context items. This template is rendered on each page load -->
 
-    <div id="template" hidden>
+    <div id="template" style="display: none; visibility: hidden;" hidden>
 
         <div id="current_page_menu_items">
             <input type="hidden" id="Tier1NodeId" value="@ViewBag.Tier1NodeId" />
             <input type="hidden" id="Tier2NodeId" value="@ViewBag.Tier2NodeId" />
             <input type="hidden" id="Tier3NodeId" value="@ViewBag.Tier3NodeId" />
-        </div>
-
-        <div id="breadcrumbs_template">
-            @Html.Partial("BreadCrumbs", ViewBag.NavigationPath as SelectedNodes)
         </div>
 
         <div id="tierthree_template">
@@ -146,10 +143,6 @@
     <!-- #endregion -->
     @Scripts.Render("~/app/mobilescripts")
 
-<style>
-    /*select.full-width {
-        width: 300px;
-    }*/
-</style>
 </body>
+
 </html>

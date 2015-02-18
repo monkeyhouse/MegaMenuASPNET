@@ -6,9 +6,11 @@ $lborder:rgba(255, 255, 255, 0.15);
 $hTop : 40px;
 $hBottom : 30px;
 
-
+html{
+   background-color:$barColor;
+}
 body{
-    height:100%;
+    height:calc(100%-5px);
 }
 
 @mixin toolbar {
@@ -30,16 +32,20 @@ body{
     overflow-y:scroll;
     position:static;
     display:inline-block;
-    height:calc(100% - 70px);
+    height:calc(100% - 40px);
     width: 100%;
 }
   
-#PageFooter {
- background-color: $barColor;
- height: $hBottom;
- display:inline-flex;
- position:static;
- width: 100%;
+#UserInfoFooter {
+    background-color: $barColor;
+    height: 40px;
+    display:block;
+    position:absolute;
+    bottom:0;
+    color:#ddd;
+    width: 100%;
+    z-index:-1;
+    margin-left:10px;
 }
 
 #MainMenuToggle {
